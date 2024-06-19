@@ -2,8 +2,11 @@ from flask import Flask
 from flask_mysqldb import MySQL
 import yaml
 
+mysql = MySQL()
+
 def create_app():
     app = Flask(__name__)
+    mysql.init_app(app)
 
     db = yaml.safe_load(open("website/db.yaml"))
 
@@ -16,16 +19,11 @@ def create_app():
     #registering blueprints
     #------------------------
     #importing blueprints from other files
-    from .views import viewsBlueprint
-    from .auth import authBlueprint 
+    from .views import views
+    from .auth import auth
 
-    #registering
-    app.register_blueprint(viewsBlueprint, url_prefix='/')
-    app.register_blueprint(authBlueprint, url_prefix='/')
+    #registering 
+    app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(auth, url_prefix='/')
 
     return app
-
-def sqlApp():
-    app = create_app()
-    mysql = MySQL(app)
-    return mysql
