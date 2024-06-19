@@ -15,10 +15,10 @@ def login():
             SELECT * from users
             WHERE email = email
         ''')
-        user = cursor.FETCH
+        user = cursor.fetchall()
         cursor.close()
 
-        return render_template("home.html", data=userdata)
+        return render_template("home.html", data=user)
     return render_template("signin.html")
 
 @auth.route('/signup', methods=['GET', 'POST'])
