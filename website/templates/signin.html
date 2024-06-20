@@ -4,23 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Recommender</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="\static\styles.css">
 </head>
 <body>
 
     <!-- Sign In Screen -->
     <section id="welcome-screen" class="screen hidden">
         <div class="content">
-            <label for="username">Username/Email</label>
-            <input type="text" id="username" placeholder="Username/Email">
+
+            <h3 align="center">Sign In</h3>
+
+            <label for="username">Email</label>
+            <input type="text" id="username" placeholder="Email Address">
+
             <label for="password">Password</label>
             <input type="password" id="password" placeholder="Password">
-            <a href="#" class="forgot-password">Forgot Password?</a>
-            <button id="signin-button" class="btn" onclick="handleSignIn()">Sign In</button>
-            <p><a href="#" id="signup-link" class="signup">Don't have an account? Sign up</a></p>
+
+            <!-- <a href="#" class="forgot-password">Forgot Password?</a> -->
+
+            <button id="signin-button" class="btn" type="submit">Sign In</button>
+
+            <p><a href={{ url_for('auth.signup') }} id="signup-link" class="signup">Don't have an account? Sign up</a></p>
+
         </div>
     </section>
 
-    <script src="scripts.js"></script>
+    <script src="\static\scripts.js"></script>
 </body>
 </html>

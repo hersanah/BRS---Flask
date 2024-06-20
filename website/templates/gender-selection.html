@@ -10,9 +10,13 @@
 <body>
     <section id="welcome-screen" class="screen hidden">
         <div class="content">
-            <h1>Hello, <span id="user-name">Keren</span></h1>
-            <button class="btn" id="male-button">Male</button>
-            <button class="btn" id="female-button">Female</button>
+            <h1>Hello, {{first_name}}</h1>
+
+            <form method="POST" action="">
+                <input class="btn" id="male-button">Male</button>
+                <input class="btn" id="female-button">Female</button>
+            </form>
+
         </div>
     </section>
 </body>
