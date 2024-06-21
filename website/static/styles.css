@@ -108,3 +108,8 @@ a:hover {
 #welcome-screen {
     display: flex;
 }
+
+.text-to-user {
+    color: #169A27;
+    font-family: itim, sans-serif;
+}

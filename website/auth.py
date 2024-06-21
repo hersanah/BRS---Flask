@@ -11,18 +11,24 @@ def login(existence):
         flash('Account already exists', category='error')
 
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+
+        userDetails = request.form
+        email = userDetails.get('email')
+        password = userDetails.get('password')
 
         cursor = mysql.connection.cursor()
         cursor.execute('''
             SELECT * from users
-            WHERE email = email
-        ''')
-        user = cursor.fetchall()
+            WHERE email = %s
+        ''', [email])
+        userData = cursor.fetchone()
         cursor.close()
 
-        return render_template("home.html", data=user)
+        if check_password_hash(userData[4], password):
+            if not userData[5]:
+                return redirect(url_for('views.select_gender', user=userData[0]))
+            return render_template("book-recommendations.html")
+
     return render_template("signin.html", existence=0)
 
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -75,9 +81,11 @@ def signup():
             cur2.execute(
                 '''INSERT INTO users(email, first_name, last_name, password)
                 VALUES (%s, %s, %s, %s)''',
-                (email, first_name, last_name, password)
+                (email, first_name.lower(), last_name.lower(), password)
             )
+
             mysql.connection.commit()
+
             cur2.execute('''
             select id from users
             where email= %s
@@ -85,8 +93,8 @@ def signup():
             userid = cur2.fetchone()
             cur2.close()
             flash('Account Created!', category='success')
-            print(userid[0])
-            return redirect(url_for('views.select_gender', user=userid))
+
+            return redirect(url_for('views.select_gender', user=userid[0]))
 
     return render_template("signup.html")
 

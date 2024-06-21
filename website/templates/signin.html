@@ -14,15 +14,19 @@
 
             <h3 align="center">Sign In</h3>
 
-            <label for="username">Email</label>
-            <input type="text" id="username" placeholder="Email Address">
+            <form method="POST" action="">
 
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Password">
+                <label for="username">Email</label>
+                <input type="text" name="email" id="username" placeholder="Email Address">
 
-            <!-- <a href="#" class="forgot-password">Forgot Password?</a> -->
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Password">
 
-            <button id="signin-button" class="btn" type="submit">Sign In</button>
+                <!-- <a href="#" class="forgot-password">Forgot Password?</a> -->
+
+                <button id="signin-button" class="btn" type="submit">Sign In</button>
+
+            </form>
 
             <p><a href={{ url_for('auth.signup') }} id="signup-link" class="signup">Don't have an account? Sign up</a></p>
 

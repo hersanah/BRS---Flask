@@ -10,12 +10,22 @@
 <body>
     <section id="welcome-screen" class="screen hidden">
         <div class="content">
-            <h1>Hello, {{first_name}}</h1>
 
-            <form method="POST" action="">
-                <input class="btn" id="male-button">Male</button>
-                <input class="btn" id="female-button">Female</button>
-            </form>
+            <h1 class="text-to-user">Hello, {{first_name}}</h1>
+
+            <div>
+                <img src="\static\male-pic.png">
+                <img src="\static\female-pic.png">
+            </div>
+
+            <h1>Kindly select your gender below</h1>
+
+            <div>
+                <form method="POST" action="">
+                    <button class="btn" name="0" id="male-button">Male</button>
+                    <button class="btn" name="1" id="female-button">Female</button>
+                </form>
+            </div>
 
         </div>
     </section>
