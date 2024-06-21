@@ -30,7 +30,7 @@ def select_gender(user):
         mysql.connection.commit()
         cur.close()
 
-        return render_template("genre-selection.html")
+        return redirect(url_for('views.select_genre', user=user))
     
     cur = mysql.connection.cursor()
     cur.execute('''
@@ -44,3 +44,8 @@ def select_gender(user):
     name = returnedname[0].lower().capitalize()
 
     return render_template("gender-selection.html", first_name=name)
+
+
+@views.route('/genre-selection/<user>', methods=['POST', 'GET'])
+def select_genre(user):
+    return render_template("genre-selection.html")
