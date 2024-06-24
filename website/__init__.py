@@ -13,7 +13,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'CSC520 Group 6'
     app.config['MYSQL_HOST'] = db['mysql_host']
     app.config['MYSQL_USER'] = db['mysql_user']
-    app.config['MYSQL_PASSWORD'] = db['mysql_password']
+    # app.config['MYSQL_PASSWORD'] = db['mysql_password']
     app.config['MYSQL_DB'] = db['mysql_db']
 
     #registering blueprints

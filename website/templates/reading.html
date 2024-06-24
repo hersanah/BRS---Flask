@@ -10,8 +10,8 @@
     <!-- Reading Screen -->
     <section id="welcome-screen" class="screen">
         <div class="content">
-            <img src="path-to-reading-image.jpg" alt="People Reading" class="background-image">
-            <button class="btn">Enjoy Reading!</button>
+            <img src="/static/people-reading.png" alt="People Reading" class="background-image">
+            <a href={{ url_for('views.recommend_books', user=user) }}><button class="btn">Enjoy Reading!</button></a>
         </div>
     </section>
 

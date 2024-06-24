@@ -4,32 +4,35 @@ from . import mysql
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login/<existence>', methods=['GET', 'POST'])
-def login(existence):
-
-    if existence == 1:
-        flash('Account already exists', category='error')
-
+@auth.route('/login/', methods=['GET', 'POST'])
+def login():
     if request.method == 'POST':
 
         userDetails = request.form
-        email = userDetails.get('email')
+        email = userDetails.get('email').lower()
+
         password = userDetails.get('password')
 
         cursor = mysql.connection.cursor()
+
         cursor.execute('''
-            SELECT * from users
+            SELECT * FROM users
             WHERE email = %s
         ''', [email])
         userData = cursor.fetchone()
+
         cursor.close()
+
+        if userData is None:
+            return redirect(url_for('auth.signup'))
 
         if check_password_hash(userData[4], password):
             if not userData[5]:
                 return redirect(url_for('views.select_gender', user=userData[0]))
             return render_template("book-recommendations.html")
 
-    return render_template("signin.html", existence=0)
+    return render_template("signin-2.html")
+
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -38,9 +41,9 @@ def signup():
         # Get form data
         userDetails = request.form
         
-        email = userDetails['email']
-        first_name = userDetails['firstName']
-        last_name = userDetails['lastName']
+        email = userDetails['email'].lower()
+        first_name = userDetails['firstName'].lower()
+        last_name = userDetails['lastName'].lower()
         password1 = userDetails['password1']
         password2 = userDetails['password2']
 
@@ -54,7 +57,7 @@ def signup():
         cur1.close()
 
         if user:
-            #  reidrect existing user to log in page
+            #  redirect existing user to log in page
             return redirect(url_for('auth.login', existence=1))
             
         # Checking form data
@@ -97,7 +100,3 @@ def signup():
             return redirect(url_for('views.select_gender', user=userid[0]))
 
     return render_template("signup.html")
-
-# @auth.route('/logout')
-# def logout():
-#     return "<p>Log Out</p>"

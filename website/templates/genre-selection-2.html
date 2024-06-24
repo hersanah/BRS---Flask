@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Favorite Genres</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #388e3c;
+        }
+        .genres {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .genre {
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .genre:hover {
+            background-color: #d0d0d0;
+        }
+        .genre.selected {
+            background-color: #a5d6a7;
+        }
+        .done-button {
+            background-color: #388e3c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .done-button:hover {
+            background-color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Keren, kindly select your favorite genres below</h1>
+        <p>Select at least 3</p>
+        <form id="genresForm" method="post" action="/genre-selection/{{ user }}">
+            <div class="genres">
+                <div class="genre">Fantasy</div>
+                <div class="genre">Sci-Fi</div>
+                <div class="genre">Mystery</div>
+                <div class="genre">Thriller</div>
+                <div class="genre">Romance</div>
+                <div class="genre">Classics</div>
+                <div class="genre">Non-Fiction</div>
+                <div class="genre">Short Stories</div>
+            </div>
+            <input type="hidden" name="selectedGenres" id="selectedGenres">
+            <button type="submit" class="done-button" onclick="submitSelection(event)">Done</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('.genre').forEach(function (element) {
+            element.addEventListener('click', function () {
+                element.classList.toggle('selected');
+            });
+        });
+
+        function submitSelection(event) {
+            event.preventDefault();
+            const selectedGenres = Array.from(document.querySelectorAll('.genre.selected')).map(element => element.textContent);
+            if (selectedGenres.length >= 3) {
+                document.getElementById('selectedGenres').value = JSON.stringify(selectedGenres);
+                document.getElementById('genresForm').submit();
+            } else {
+                alert('Please select at least 3 genres.');
+            }
+        }
+    </script>
+</body>
+</html>
