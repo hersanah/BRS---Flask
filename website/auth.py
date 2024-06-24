@@ -27,8 +27,11 @@ def login():
             return redirect(url_for('auth.signup'))
 
         if check_password_hash(userData[4], password):
-            if not userData[5]:
+            if userData[5] is None:
                 return redirect(url_for('views.select_gender', user=userData[0]))
+
+            elif userData[6] is None:
+                return redirect(url_for('views.select_genre', user=userData[0]))
             return render_template("book-recommendations.html")
 
     return render_template("signin-2.html")
